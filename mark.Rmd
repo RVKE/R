@@ -5,7 +5,33 @@ date: '2022-06-24'
 output: html_document
 ---
 
-```{r pressure, echo=FALSE}
+## Uitwerkingen
 
+Hier zorg ik ervoor dat de csv file nu ingelezen kan worden via de variabele "resultaten".
+
+```{r setup, include=FALSE}
+uitslag_cijfers <- read.csv(file = 'data/1976-2020-president.csv')
+```
+
+Hier verander ik de naam van "party_simplified" naar "partij" om de tabel wat overzichtelijker te maken.
+
+```{r pressure, echo=FALSE}
+uitslag_cijfers <- uitslag_cijfers %>%
+  rename(partij = party_simplified)
+```
+
+Ik zoom in op de laatste Amerikaanse verkiezingen in 2020 waarbij de democraten wonnen en daarvoor filter ik de resultaten.
+
+```{r pressure, echo=FALSE}
+uitslag_cijfers_2020 <- uitslag_cijfers %>%
+  filter(year == "2020")
+View(uitslag_cijfers_2020)
+```
+
+Tijdelijke plot:
+
+```{r pressure, echo=FALSE}
+ggplot(data = uitslag_cijfers_2020, mapping = aes(x = state, fill = party_simplified)) +
+  geom_bar()
 ```
 
