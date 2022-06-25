@@ -20,6 +20,24 @@ uitslag_cijfers <- uitslag_cijfers %>%
   rename(partij = party_simplified)
 ```
 
+Om een goed beeld te krijgen van de stemverdeling, maak ik een nieuwe kolom aan met het stem-percentage van de partij. Dit doe ik met mutate.
+
+```{r pressure, echo=FALSE}
+uitslag_cijfers <- uitslag_cijfers %>%
+  mutate(stempercentage = 100 * candidatevotes/totalvotes)
+View(uitslag_cijfers)
+```
+
+Om een goed beeld te krijgen van de stem-percentages over tijd, maak ik een lineplot aan om de stem-percentages te visualiseren in Texas.
+
+```{r pressure, echo=FALSE}
+uitslag_cijfers %>% 
+  group_by(partij) %>% 
+  ggplot()+geom_line(aes(year, stempercentage, group=partij, color=partij))
+```
+
+
+
 Ik zoom in op de laatste Amerikaanse verkiezingen in 2020 waarbij de democraten wonnen en daarvoor filter ik de resultaten.
 
 ```{r pressure, echo=FALSE}
@@ -28,10 +46,10 @@ uitslag_cijfers_2020 <- uitslag_cijfers %>%
 View(uitslag_cijfers_2020)
 ```
 
-Tijdelijke plot:
+
+Plot van cijfers
 
 ```{r pressure, echo=FALSE}
-ggplot(data = uitslag_cijfers_2020, mapping = aes(x = state, fill = party_simplified)) +
+ggplot(data = uitslag_cijfers_2020, mapping = aes(x = state_po, fill = totalvotes)) +
   geom_bar()
 ```
-
